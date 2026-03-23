@@ -36,38 +36,74 @@ Use this guide to establish Notion MCP access and generate the project workspace
 
 ## 2) Create and authorize a Notion integration
 
-> **🧑 Human action required** — Steps 1-4 and 6 must be done by the user in a browser. The agent cannot create integrations or grant page access via API. Guide the user through these steps, then the agent takes over from step 5 onward.
-1. Go to [**notion.so/my-integrations**](https://www.notion.so/my-integrations) and click **New integration**.
-2. Give it a name (e.g., "Research Agent") and select the workspace.
-3. Under **Capabilities**, ensure "Read content", "Update content", and "Insert content" are checked.
-4. Click **Submit** and copy the **Internal Integration Secret** (starts with `ntn_`).
-5. **Hand the token to your agent** — paste it in the chat, or set the environment variable yourself:
+> **🤖 Agent behavior**: Steps 1-4 and 6 require browser actions. The agent should walk the user through each step with clear instructions, wait for confirmation, then proceed.
 
+### Step 2a — Create the integration
+
+Present this to the user:
+
+```
+I need you to create a Notion integration so I can access your workspace.
+
+1. Open this link in your browser:
+   👉 https://www.notion.so/my-integrations
+
+2. Click "New integration"
+3. Name it (e.g., "Research Agent")
+4. Under Capabilities, make sure these are checked:
+   ✅ Read content
+   ✅ Update content
+   ✅ Insert content
+5. Click Submit
+6. Copy the token that appears (it starts with "ntn_")
+
+Paste the token here when you're done.
+```
+
+**After the user provides the token** — the agent should:
+1. Verify format: token starts with `ntn_` and is 50+ characters
+2. Set the environment variable:
    ```bash
-   # macOS / Linux
-   export NOTION_API_TOKEN="ntn_your_token_here"
-
-   # Windows PowerShell
-   $env:NOTION_API_TOKEN = "ntn_your_token_here"
-
-   # Windows CMD
-   set NOTION_API_TOKEN=ntn_your_token_here
+   export NOTION_API_TOKEN="<user-provided-token>"
    ```
+3. On Windows, use:
+   ```powershell
+   $env:NOTION_API_TOKEN = "<user-provided-token>"
+   ```
+4. For persistence, write to the platform's config:
+   - **Claude Code**: set via `opencode mcp` or `.env` file (NOT committed to git)
+   - **Cursor**: inject into `.cursor/mcp.json` env block
+   - **Other**: write to `.env` at project root, add `.env` to `.gitignore`
 
-   To make this permanent, add it to your shell profile (`~/.zshrc`, `~/.bashrc`) or system environment variables on Windows.
+> ⚠️ NEVER commit tokens to git. NEVER echo tokens in output. If writing to a config file, verify `.gitignore` covers it first.
 
-   > **🤖 Agent note**: If the user provides the token in chat, write it to the appropriate config file or set it in the environment. Do NOT store tokens in committed files.
+### Step 2b — Grant page access
 
-6. **🧑 Grant page access** (human action): In Notion, open each page/database your agent needs → click **•••** (top right) → **Add connections** → select your integration.
-7. Confirm the integration name appears in the sharing panel. Tell your agent which pages/databases were shared.
+Present this to the user:
 
-> **Important**: Without explicit page access, MCP calls return "Object not found" even when the token is valid. This is the #1 setup mistake.
+```
+Now I need access to your Notion pages. For each page or database you want me to work with:
+
+1. Open the page in Notion
+2. Click the ••• menu (top right)
+3. Click "Add connections"
+4. Search for and select your integration name (e.g., "Research Agent")
+
+Which pages/databases did you share? (paste the URLs or names)
+```
+
+**After the user confirms** — the agent should:
+1. Try `notion-search` with `query: ""` and `page_size: 1` to verify at least one result returns
+2. If "Object not found" error → tell the user: "It looks like the integration doesn't have access yet. Can you double-check that you added the connection to the pages?"
+3. If successful → proceed to section 3 (MCP connection)
+
+> **Why this step exists**: Notion integrations start with ZERO access. Even with a valid token, every page/database must be explicitly shared with the integration. This is by design (security) but is the #1 cause of setup failures.
 
 ## 3) Connect Notion MCP to your agent platform
 
-> **🤖 Agent-executable** — The agent can perform all steps below. For Option A, the OAuth browser popup still requires human interaction, but the agent initiates it.
+> **🤖 Agent-executable** — The agent can perform these steps directly. For Options A and B, OAuth requires the user to click "Authorize" in a browser window that opens automatically.
 
-Choose the option that matches your platform. All three produce the same result: your agent gets access to Notion's MCP tools.
+Ask the user which platform they're using, then follow the matching option:
 ### A. Claude Code (OpenCode MCP OAuth)
 
 Use remote MCP OAuth with the official endpoint:
@@ -76,13 +112,17 @@ Use remote MCP OAuth with the official endpoint:
 https://mcp.notion.com/mcp
 ```
 
-Steps:
+The agent should:
 1. Run the MCP auth command:
    ```bash
    opencode mcp auth notion
    ```
-2. A browser window opens for OAuth — **the user completes the authorization in the browser**.
-3. Restart your agent session.
+2. Tell the user:
+   ```
+   A browser window should have opened. Please authorize the Notion connection
+   and come back here when done.
+   ```
+3. After the user confirms, restart the session and verify tools are available.
 4. Verify tools are available by asking: "list my Notion tools" or checking the MCP tool list.
 
 Expected tools include:
@@ -95,28 +135,29 @@ Expected tools include:
 
 ### B. Cursor
 
-Add Notion MCP to your workspace configuration file.
-
-**File location**: `.cursor/mcp.json` in your project root (create the directory if it doesn't exist):
-
-```bash
-mkdir -p .cursor
-```
-
-**File content**:
-
-```json
-{
-  "mcpServers": {
-    "notion": {
-      "type": "sse",
-      "url": "https://mcp.notion.com/mcp"
-    }
-  }
-}
-```
-
-After saving, Cursor will prompt for OAuth authentication. Complete it, then restart the workspace.
+The agent should:
+1. Create the config directory and file:
+   ```bash
+   mkdir -p .cursor
+   ```
+2. Write `.cursor/mcp.json`:
+   ```json
+   {
+     "mcpServers": {
+       "notion": {
+         "type": "sse",
+         "url": "https://mcp.notion.com/mcp"
+       }
+     }
+   }
+   ```
+3. Tell the user:
+   ```
+   I've added the Notion MCP config. Please restart Cursor.
+   When it reopens, you'll see an OAuth prompt — click "Authorize" to connect your Notion workspace.
+   Let me know once that's done.
+   ```
+4. After the user confirms, verify tools are available.
 
 ### C. Generic stdio (any MCP client)
 
