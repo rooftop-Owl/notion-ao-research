@@ -36,11 +36,12 @@ Use this guide to establish Notion MCP access and generate the project workspace
 
 ## 2) Create and authorize a Notion integration
 
+> **🧑 Human action required** — Steps 1-4 and 6 must be done by the user in a browser. The agent cannot create integrations or grant page access via API. Guide the user through these steps, then the agent takes over from step 5 onward.
 1. Go to [**notion.so/my-integrations**](https://www.notion.so/my-integrations) and click **New integration**.
 2. Give it a name (e.g., "Research Agent") and select the workspace.
 3. Under **Capabilities**, ensure "Read content", "Update content", and "Insert content" are checked.
 4. Click **Submit** and copy the **Internal Integration Secret** (starts with `ntn_`).
-5. Save the token as an environment variable:
+5. **Hand the token to your agent** — paste it in the chat, or set the environment variable yourself:
 
    ```bash
    # macOS / Linux
@@ -55,12 +56,16 @@ Use this guide to establish Notion MCP access and generate the project workspace
 
    To make this permanent, add it to your shell profile (`~/.zshrc`, `~/.bashrc`) or system environment variables on Windows.
 
-6. **Grant page access**: In Notion, open each page/database your agent needs → click **•••** (top right) → **Add connections** → select your integration.
-7. Confirm the integration name appears in the sharing panel.
+   > **🤖 Agent note**: If the user provides the token in chat, write it to the appropriate config file or set it in the environment. Do NOT store tokens in committed files.
+
+6. **🧑 Grant page access** (human action): In Notion, open each page/database your agent needs → click **•••** (top right) → **Add connections** → select your integration.
+7. Confirm the integration name appears in the sharing panel. Tell your agent which pages/databases were shared.
 
 > **Important**: Without explicit page access, MCP calls return "Object not found" even when the token is valid. This is the #1 setup mistake.
 
 ## 3) Connect Notion MCP to your agent platform
+
+> **🤖 Agent-executable** — The agent can perform all steps below. For Option A, the OAuth browser popup still requires human interaction, but the agent initiates it.
 
 Choose the option that matches your platform. All three produce the same result: your agent gets access to Notion's MCP tools.
 ### A. Claude Code (OpenCode MCP OAuth)
@@ -76,7 +81,7 @@ Steps:
    ```bash
    opencode mcp auth notion
    ```
-2. Follow the browser OAuth flow to authorize your Notion workspace.
+2. A browser window opens for OAuth — **the user completes the authorization in the browser**.
 3. Restart your agent session.
 4. Verify tools are available by asking: "list my Notion tools" or checking the MCP tool list.
 
@@ -141,35 +146,40 @@ Add to your client's MCP configuration file (check your client's docs for the ex
 
 ## 4) Verify connectivity
 
-Run an API-level check first:
+> **🤖 Agent-executable** — The agent should run these checks automatically after setup.
+
+Quick API check (agent can run this directly):
 
 ```bash
-curl https://api.notion.com/v1/users/me \
+curl -s https://api.notion.com/v1/users/me \
   -H "Authorization: Bearer $NOTION_API_TOKEN" \
-  -H "Notion-Version: 2022-06-28"
+  -H "Notion-Version: 2022-06-28" | head -c 200
 ```
 
 Then run one MCP tool probe:
-- `notion-search` with a small query, or
-- `notion-fetch` against a known page URL/ID.
+- `notion-search` with query `""` and `page_size: 1` — should return at least one result
+- OR `notion-fetch` against a known page URL/ID from the shared pages
 
-Success criteria:
-- No auth errors
-- No permission errors for intended workspace scope
-- Tool response contains expected page/database metadata
+**Success criteria**:
+- curl returns JSON with user info (not an error)
+- MCP tool returns page/database metadata (not "Object not found")
+- If "Object not found": the user forgot to grant page access (step 2.6) — ask them to do it
 
 ## 5) Generate `NOTION_WORKSPACE.md`
 
-### Manual generation (portable default)
+> **🤖 Agent-executable** — The agent can generate this file entirely on its own once MCP is connected.
+
+### Recommended flow (agent-driven)
 
 1. Copy `examples/workspace-config.md` into project root as `NOTION_WORKSPACE.md`.
-2. For each target database:
-   - Use `notion-fetch` on database/data-source URL.
-   - Capture `data_source_id`, title property name, key properties, select/multi-select options.
-3. Fill the **Database Registry** section.
-4. Add minimal DDL snippets for each database in **Database Schemas**.
-5. Add key project pages in **Project Pages** with page IDs and purpose notes.
-6. Save and commit the file to the project repository.
+2. Use `notion-search` with `query: ""` to discover all accessible databases.
+3. For each database:
+   - Run `notion-fetch` on the database URL to get its schema.
+   - Extract: `data_source_id`, title property name, key properties, select/multi-select options.
+4. Fill the **Database Registry** table in `NOTION_WORKSPACE.md`.
+5. Add DDL snippets for each database in **Database Schemas**.
+6. Add key project pages in **Project Pages** with page IDs and purpose notes.
+7. Save the file — the workspace is now configured for all notion-research skills.
 
 ### Optional auto-generation
 
