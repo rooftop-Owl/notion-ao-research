@@ -1,6 +1,27 @@
 # Formulas & Automation
 
-Notion databases become powerful when they compute, filter, and connect automatically. Most people start with “store rows and sort them,” but the real leverage appears when formulas remove repetitive decisions and relations stop being manual chores. This chapter is a practical walkthrough from core logic to scalable automation patterns. You will start with three tiny building blocks, then layer in Formula 2.0 features, and finally connect everything with relation automation.
+> **What you'll learn:** How to make Notion databases compute, filter, and connect automatically — from three primitive building blocks to Formula 2.0 patterns to relation automation.
+>
+> - The 3 building blocks: `empty()`, `not`, `and`
+> - Formula 2.0 features: `let`, `lets`, `filter`, `match`, `ifs`, `dateRange`
+> - Relation automation pattern (platform-agnostic)
+> - Practical tips for maintainable formulas
+
+**See also:** [Design Methodology](./design-methodology.md) for the database architecture these formulas operate on. · [Principles](./principles-and-antipatterns.md) for the "don't make it a chore" principle that motivates automation.
+
+---
+
+## Table of Contents
+
+- [Formula 2.0 — What Changed](#formula-20--what-changed)
+- [The Three Building Blocks](#the-three-building-blocks)
+- [Key Functions](#key-functions)
+- [Relation Automation](#relation-automation)
+- [Tips](#tips)
+
+---
+
+Notion databases become powerful when they compute, filter, and connect automatically. Most people start with "store rows and sort them," but the real leverage appears when formulas remove repetitive decisions and relations stop being manual chores.
 
 The core mindset is simple:
 
@@ -10,113 +31,112 @@ The core mindset is simple:
 
 When these three are in place, your database stops acting like a static table and starts behaving like a lightweight logic engine.
 
+---
+
 ## Formula 2.0 — What Changed
 
-Formula 2.0 matters because it improved both **expressiveness** and **maintainability**. In practice, this means you can build longer formulas without losing readability, and you can query related data more directly.
+Formula 2.0 improved both **expressiveness** and **maintainability**. You can build longer formulas without losing readability, and query related data more directly.
 
-
-| Area | Formula 1.0 | Formula 2.0 | Why it matters in real workflows |
+| Area | Formula 1.0 | Formula 2.0 | Why it matters |
 |---|---|---|---|
-| Writing direction | Horizontal, spreadsheet-like chaining | Vertical, code-like structure | Easier to scan, indent, and debug long formulas |
-| Comments | Not available | Available | You can annotate intent inside complex logic |
-| Variables | Not available | `let()` / `lets()` | Reuse intermediate values instead of repeating the same expression |
-| Rollup dependency | High | Lower (more direct relation-list processing) | Fewer helper properties; cleaner schemas |
-| Type mixing in branches | Strict and awkward | More flexible | Cleaner output when combining labels + numeric results |
-| Arrays / lists | Limited | First-class list workflows (`filter`, `map`, etc.) | Powerful relation analytics directly in formula properties |
+| Writing direction | Horizontal, spreadsheet-like | Vertical, code-like | Easier to scan, indent, debug |
+| Comments | Not available | Available | Annotate intent inside complex logic |
+| Variables | Not available | `let()` / `lets()` | Reuse intermediate values |
+| Rollup dependency | High | Lower (direct relation-list access) | Fewer helper properties, cleaner schemas |
+| Type mixing | Strict and awkward | More flexible | Cleaner combined labels + numbers |
+| Arrays / lists | Limited | First-class (`filter`, `map`, etc.) | Powerful relation analytics in formula |
 
-### Practical impact checklist
+> [!TIP]
+> **Quick self-check:** If your formula repeats the same relation traversal 3+ times → move it into a `let` variable. If your logic needed helper properties → Formula 2.0 probably lets you consolidate. If your team can't read formulas → comments + vertical formatting fix that.
 
-- If your formula repeats the same relation traversal 3+ times, 2.0 lets you move it into a variable.
-- If your logic had to be split into many helper properties, 2.0 often lets you consolidate.
-- If your team struggles to read formulas, comments + vertical formatting reduce maintenance cost.
-
-In short: Formula 2.0 is not just “new syntax.” It changes how you model logic in Notion databases.
+---
 
 ## The Three Building Blocks
 
-Before advanced functions, master these three primitives: `empty()`, `not`, and `and`. They are enough to handle most validation and classification logic.
-
+Before advanced functions, master these three primitives. They are enough to handle most validation and classification logic.
 
 ### 1) `empty(value)` — detect missing input
 
-Use `empty()` whenever your decision depends on whether a field is filled.
-
-```notion
-empty(prop("Credit"))
+```javascript
+empty(prop("Credit"))  // true when no value is present
 ```
 
-Returns `true` when no value is present.
+> [!NOTE]
+> Numbers: `0` counts as empty. Text: `""` counts as empty.
 
 ### 2) `not(boolean)` — invert a condition
 
-Often used as “has value”:
+The "has value" pattern:
 
-```notion
-not(empty(prop("Credit")))
+```javascript
+not(empty(prop("Credit")))  // "Credit field is not empty"
 ```
 
-This reads naturally as: “Credit field is not empty.”
+Only works on boolean values — you cannot use `not` on numbers, text, or dates directly.
 
 ### 3) `and(conditionA, conditionB)` — combine strict conditions
 
-`and()` requires **exactly two arguments**. For three or more conditions, nest it.
+> [!WARNING]
+> **`and()` takes exactly 2 arguments.** This is the #1 error new users hit. For three or more conditions, nest:
+> ```javascript
+> and(cond1, and(cond2, cond3))  // ✅ Correct
+> and(cond1, cond2, cond3)       // ❌ "Too many arguments" error
+> ```
 
-```notion
-and(cond1, and(cond2, cond3))
-```
-
-If you try `and(cond1, cond2, cond3)`, you get an argument-count error.
+---
 
 ### Worked Example: Payment Method Auto-Detection
 
-Assume three properties:
+Three properties: `Cash` (checkbox), `Credit` (text), `Bank` (text).
 
-- `Cash` (checkbox)
-- `Credit` (text)
-- `Bank` (text)
+Goal: auto-detect which payment method is used, catch conflicts.
 
-Goal:
+<details>
+<summary>Full formula (click to expand)</summary>
 
-- `💵 Cash` when only Cash is selected
-- `💳 Credit Card` when only Credit has text
-- `🏦 Bank Transfer` when only Bank has text
-- empty string when none selected
-- `❌ Error` when multiple methods are entered simultaneously
-
-```notion
+```javascript
 ifs(
-  and(prop("Cash"), and(empty(prop("Credit")), empty(prop("Bank")))), "💵 Cash",
-  and(not(prop("Cash")), and(not(empty(prop("Credit"))), empty(prop("Bank")))), "💳 Credit Card",
-  and(not(prop("Cash")), and(empty(prop("Credit")), not(empty(prop("Bank"))))), "🏦 Bank Transfer",
-  and(not(prop("Cash")), and(empty(prop("Credit")), empty(prop("Bank")))), "",
+  and(prop("Cash"), and(empty(prop("Credit")), empty(prop("Bank")))),
+    "💵 Cash",
+  and(not(prop("Cash")), and(not(empty(prop("Credit"))), empty(prop("Bank")))),
+    "💳 Credit Card",
+  and(not(prop("Cash")), and(empty(prop("Credit")), not(empty(prop("Bank"))))),
+    "🏦 Bank Transfer",
+  and(not(prop("Cash")), and(empty(prop("Credit")), empty(prop("Bank")))),
+    "",
   "❌ Error"
 )
 ```
 
-This pattern teaches two important habits:
+</details>
 
-1. **Explicit exclusivity** (each valid case blocks the other inputs).
-2. **Final catch-all** (`"❌ Error"`) to catch contradictory input.
+This pattern teaches two habits:
+1. **Explicit exclusivity** — each valid case blocks the other inputs.
+2. **Final catch-all** (`"❌ Error"`) — contradictory input is caught, not silently ignored.
+
+> [!NOTE]
+> **Key takeaway:** Every conditional formula should have a catch-all branch. Silent failures are the worst kind.
+
+---
 
 ## Key Functions
 
-Formula 2.0 adds functions that dramatically reduce repeated logic. Below are practical examples you can adapt directly.
+Formula 2.0 adds functions that dramatically reduce repeated logic.
 
+### `let` / `lets` — Named Variables
 
-### `let(name, value, expr)` / `lets(n1, v1, n2, v2, ..., expr)`
+Compute once, reuse everywhere:
 
-Use when you compute an intermediate value once and reuse it.
-
-```notion
+```javascript
 let(doneCount,
   prop("Tasks").filter(current.prop("Status") == "Done").length,
   "Done: " + doneCount
 )
 ```
 
-Use case: avoid recalculating expensive list expressions.
+Multiple variables with `lets`:
 
-```notion
+```javascript
 lets(
   total, prop("Tasks").length,
   done, prop("Tasks").filter(current.prop("Status") == "Done").length,
@@ -124,49 +144,31 @@ lets(
 )
 ```
 
-Use case: reusable totals + percentages in one readable block.
+### `filter(list, condition)` — Subset a Related List
 
-### `filter(list, condition)`
+```javascript
+prop("Tasks").filter(current.prop("Status") == "Done").length
+// → Count completed items from a related tasks list
 
-Keep only list items that satisfy a condition.
-
-```notion
-prop("Tasks")
-  .filter(current.prop("Status") == "Done")
-  .length
+prop("Tasks").filter(current.prop("Priority") == "High").map(current.prop("Title"))
+// → Return only high-priority task names
 ```
 
-Use case: count completed items from a related tasks list.
+### `match(array, pattern)` — Find Matching Items
 
-```notion
-prop("Tasks")
-  .filter(current.prop("Priority") == "High")
-  .map(current.prop("Title"))
-```
-
-Use case: return only high-priority task names for quick review.
-
-### `match(array, pattern)`
-
-Use pattern matching to find array entries that match a target pattern.
-
-```notion
+```javascript
 match(prop("Tags"), "bug").length
-```
+// → Count tags containing "bug"
 
-Use case: count how many selected tags include a specific label.
-
-```notion
 if(match(prop("Keywords"), "urgent").length > 0, "🔥 Action now", "")
+// → Trigger warning label if urgency keyword appears
 ```
 
-Use case: trigger a warning label if an urgency keyword appears.
+### `ifs(c1, v1, c2, v2, ..., default)` — Clean Multi-Conditional
 
-### `ifs(c1, v1, c2, v2, ..., default)`
+Replaces deeply nested `if()` chains:
 
-Cleaner alternative to deeply nested `if()` chains.
-
-```notion
+```javascript
 ifs(
   prop("Score") >= 90, "A",
   prop("Score") >= 80, "B",
@@ -175,117 +177,73 @@ ifs(
 )
 ```
 
-Use case: graded or staged classification rules.
+### `dateRange(start, end)` — Create Date Spans
 
-```notion
-ifs(
-  empty(prop("Due")), "No deadline",
-  prop("Done"), "✅ Complete",
-  "⏳ In progress"
-)
-```
-
-Use case: compact status labels from mixed boolean/date input.
-
-### `dateRange(start, end)`
-
-Create a date span from two date endpoints.
-
-```notion
+```javascript
 dateRange(prop("Start Date"), prop("End Date"))
-```
+// → Single timeline-ready period from two dates
 
-Use case: produce a single timeline-ready period field from two inputs.
-
-```notion
 let(endDate, dateAdd(prop("Start Date"), 6, "days"),
   dateRange(prop("Start Date"), endDate)
 )
+// → Auto-generate one-week windows from a start date
 ```
-
-Use case: auto-generate one-week windows from a start date.
-
-## Relation Automation
-
-Most teams hit the same bottleneck: relation fields are powerful, but manually linking records does not scale. As data volume grows, users forget to connect rows, formulas lose context, and reporting becomes inconsistent.
-
-
-The scalable answer is a **relation automation pattern**:
-
-1. **Submit event** receives structured input.
-2. For each relation target, **search target DB** by a unique key.
-3. **Create-or-update decision**:
-   - If target exists: update or reuse it.
-   - If target missing: create it first.
-4. **Link relation** from the main record to the resolved target record.
-5. Repeat for each related dimension (for example: person, company, category).
-
-Why this pattern works:
-
-- It prevents duplicate reference rows.
-- It keeps relation integrity high from day one.
-- It guarantees formulas depending on relations always have connected source data.
-
-### Design principles (platform-agnostic)
-
-- **Use stable keys** for lookup (slug, email, ID, normalized name).
-- **Separate lookup from creation** so the flow is auditable.
-- **Handle missing/ambiguous keys explicitly** (fallback queue or review status).
-- **Keep relation writes idempotent** (re-running should not create duplicates).
-
-Even if your stack changes, this pattern remains the same. The implementation tool can vary, but the decision logic should not.
-
-## Tips
-
-These habits make formulas and automation easier to maintain over time.
-
-
-
-### 1) Build in pieces
-
-Don’t write a full 20-line formula in one pass. Build and test small chunks:
-
-- first: raw condition
-- then: one valid branch
-- then: additional branches
-- finally: error/default branch
-
-This lowers syntax errors and makes logic review faster.
-
-### 2) Use the “complete button” test
-
-A practical validation habit: after editing logic, test the action path that depends on it (for many workflows, this is your completion/submit action). If that flow fails or disables unexpectedly, inspect your latest formula change first.
-
-### 3) Use emoji in output labels
-
-Status labels become easier to scan when visually encoded:
-
-- `✅ Complete`
-- `⏳ In progress`
-- `❌ Error`
-
-Tiny visual cues reduce cognitive load in dense tables.
-
-### 4) Nest `and()` for 3+ conditions
-
-Because `and()` takes exactly two arguments, always nest when combining three or more checks:
-
-```notion
-and(cond1, and(cond2, and(cond3, cond4)))
-```
-
-Treat this as a structural rule, not a workaround.
-
-### 5) Use `lets()` for repeated patterns
-
-When relation traversals or counts repeat, move them into named variables. Benefits:
-
-- fewer repeated expressions
-- easier formula edits
-- clearer intent for collaborators
-
-If you see the same expression pasted multiple times, `lets()` is usually the right refactor.
 
 ---
 
-The progression is straightforward: master `empty/not/and`, adopt Formula 2.0 patterns (`let`, `lets`, list functions), then enforce relation automation so your formulas always receive good connected data. Once these pieces are in place, your databases stop being passive records and become reliable operational systems.
+## Relation Automation
+
+Most teams hit the same bottleneck: relation fields are powerful, but manually linking records does not scale.
+
+> [!WARNING]
+> As data volume grows, users forget to connect rows, formulas lose context, and reporting becomes inconsistent. Manual relations are a scalability trap.
+
+### The Pattern (platform-agnostic)
+
+```text
+Submit event
+    ↓
+Search target DB by unique key
+    ↓
+┌─────────────────────┐
+│ Target exists?       │
+├─── YES → reuse it   │
+├─── NO  → create it  │
+└─────────────────────┘
+    ↓
+Link relation from main record to resolved target
+    ↓
+Repeat for each related dimension (person, company, category...)
+```
+
+### Design Principles
+
+- **Use stable keys** for lookup (slug, email, ID, normalized name)
+- **Separate lookup from creation** so the flow is auditable
+- **Handle missing/ambiguous keys explicitly** (fallback queue or review status)
+- **Keep relation writes idempotent** (re-running should not create duplicates)
+
+> [!NOTE]
+> Even if your implementation tool changes, this pattern remains the same. The decision logic is what matters — not the platform.
+
+---
+
+## Tips
+
+> [!TIP]
+> **Build in pieces.** Don't write a 20-line formula in one pass. Build and test small chunks: raw condition → one branch → additional branches → error/default.
+
+| Tip | Why |
+|-----|-----|
+| Build in pieces | Lowers syntax errors, makes review faster |
+| Use the "complete button" test | If your completion flow breaks, inspect the latest formula change first |
+| Emoji in output labels (`✅`, `⏳`, `❌`) | Tiny visual cues reduce cognitive load in dense tables |
+| Nest `and()` for 3+ conditions | Structural rule, not a workaround — `and(c1, and(c2, c3))` |
+| Use `lets()` for repeated patterns | Fewer expressions, easier edits, clearer intent |
+
+---
+
+> [!NOTE]
+> **The progression:** Master `empty/not/and` → adopt Formula 2.0 patterns (`let`, `lets`, list functions) → enforce relation automation. Once these pieces are in place, your databases stop being passive records and become reliable operational systems.
+>
+> **See also:** [Design Methodology](./design-methodology.md) for the database patterns these formulas power. · [Principles](./principles-and-antipatterns.md) for why "don't make it a chore" drives all of this.
