@@ -27,6 +27,14 @@ These skills use standard [Notion MCP](https://mcp.notion.com) tool names and wo
 MCP-compatible agent platform. No platform-specific dependencies in the core skills.
 Platform-specific enhancements are documented in [notion-workspace/references/platform-integrations.md](./skills/notion-workspace/references/platform-integrations.md).
 
+## Handbook
+
+Human-readable guides for learning Notion workspace design:
+
+- [Principles & Anti-Patterns](./handbook/principles-and-antipatterns.md) — The 3 rules that matter
+- [Design Methodology](./handbook/design-methodology.md) — Master tables, input sections, status lifecycles
+- [Formulas & Automation](./handbook/formulas-and-automation.md) — Formula 2.0 and automation patterns
+
 ## Structure
 
 ```text

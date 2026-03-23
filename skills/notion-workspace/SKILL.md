@@ -1,6 +1,6 @@
 ---
 name: notion-workspace
-description: This skill should be used when the user asks to "set up Notion", "connect Notion MCP", "create a notion workspace config", "configure Notion databases", or "getting started with Notion". It establishes MCP connectivity, creates the workspace registry file, and routes requests to the correct Notion AO Research skill.
+description: This skill should be used when the user asks to "set up Notion", "connect Notion MCP", "create a notion workspace config", "configure Notion databases", "design a database", "create a new schema", "help me set up a DB", or "getting started with Notion". It establishes MCP connectivity, creates the workspace registry file, and routes requests to the correct Notion AO Research skill.
 ---
 
 # notion-workspace
@@ -93,6 +93,7 @@ Minimum requirement: maintain one canonical `NOTION_WORKSPACE.md` per project ro
 - **`references/setup-guide.md`** — Multi-platform MCP setup, token creation, verification, and manual config-generation workflow.
 - **`references/workspace-config-spec.md`** — Normative format spec for `NOTION_WORKSPACE.md`, required sections, field semantics, and maintenance protocol.
 - **`references/platform-integrations.md`** — Optional platform enhancements and automation patterns.
+- **`references/schema-design.md`** — Decision tree for helping users design new database schemas: master tables, input sections, property types, status lifecycles, and views.
 
 ### Examples
 
