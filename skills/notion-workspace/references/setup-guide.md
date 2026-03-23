@@ -1,5 +1,7 @@
 # Setup Guide
 
+> **Disclaimer**: This guide provides thin, shallow guidelines to get started — not magic solutions. Notion's API, MCP ecosystem, and agent platforms are all moving targets. The instructions here may become outdated, break on your specific platform, or not cover your edge case. **You and your agent are responsible for verifying every installation, configuration, and ongoing maintenance step.** Do not blindly trust any automated setup — always confirm the result works before relying on it.
+
 Use this guide to establish Notion MCP access and generate the project workspace config on any MCP-compatible agent platform.
 
 **What is MCP?** Model Context Protocol is an open standard that lets AI agents call external tools (like the Notion API) through a unified interface. When connected, your agent gains tools like `notion-fetch`, `notion-create-pages`, etc. — no custom code required.
@@ -253,3 +255,7 @@ See `references/platform-integrations.md` for platform-specific automation.
 ### Placeholder resolution fails at runtime
 - Confirm `NOTION_WORKSPACE.md` is in project root.
 - Confirm logical database names match registry entries exactly.
+
+---
+
+> **Remember**: This guide is a starting point, not a maintenance contract. APIs change, tokens expire, MCP servers update, and Notion ships new features. Both the user and the agent must treat every setup step as something that needs periodic verification — not as a one-time fire-and-forget ritual.
