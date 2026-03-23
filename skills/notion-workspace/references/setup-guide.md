@@ -2,30 +2,67 @@
 
 Use this guide to establish Notion MCP access and generate the project workspace config on any MCP-compatible agent platform.
 
+**What is MCP?** Model Context Protocol is an open standard that lets AI agents call external tools (like the Notion API) through a unified interface. When connected, your agent gains tools like `notion-fetch`, `notion-create-pages`, etc. — no custom code required.
+
 ## 1) Prerequisites
 
-- A Notion account with permission to create integrations
-- Access to the pages/databases your agent must read/write
-- An MCP-capable client (Claude Code, Cursor, Windsurf, or another MCP runtime)
-- Shell access for setting environment variables
+### Required accounts
+- A **Notion account** with permission to create integrations
+- Access to the pages/databases your agent will read/write
+
+### Required software
+- **An MCP-compatible agent client** — for example:
+  - [Claude Code](https://github.com/anthropics/claude-code) (OpenCode)
+  - [Cursor](https://cursor.com)
+  - [Windsurf](https://codeium.com/windsurf)
+  - Any client that supports the [Model Context Protocol](https://modelcontextprotocol.io)
+
+- **Node.js v18+** (needed for the generic stdio setup in Option C below)
+  - Check if installed: `node --version`
+  - If not installed: download from [nodejs.org](https://nodejs.org) or use a package manager:
+    ```bash
+    # macOS (Homebrew)
+    brew install node
+
+    # Ubuntu/Debian
+    sudo apt install nodejs npm
+
+    # Windows (winget)
+    winget install OpenJS.NodeJS.LTS
+    ```
+  - Node.js includes `npm` (package manager) and `npx` (package runner). `npx` lets you run packages without installing them globally — it downloads, runs, and cleans up automatically.
+
+- **Shell access** — Terminal (macOS/Linux) or PowerShell/Command Prompt (Windows)
 
 ## 2) Create and authorize a Notion integration
 
-1. Open Notion integrations and create a new **internal integration**.
-2. Copy the integration token.
-3. Export the token for local runtime:
+1. Go to [**notion.so/my-integrations**](https://www.notion.so/my-integrations) and click **New integration**.
+2. Give it a name (e.g., "Research Agent") and select the workspace.
+3. Under **Capabilities**, ensure "Read content", "Update content", and "Insert content" are checked.
+4. Click **Submit** and copy the **Internal Integration Secret** (starts with `ntn_`).
+5. Save the token as an environment variable:
 
-```bash
-export NOTION_API_TOKEN="<your-integration-token>"
-```
+   ```bash
+   # macOS / Linux
+   export NOTION_API_TOKEN="ntn_your_token_here"
 
-4. In Notion, open each target page/database and grant access to the integration.
-5. Confirm the integration appears in page/database sharing settings.
+   # Windows PowerShell
+   $env:NOTION_API_TOKEN = "ntn_your_token_here"
 
-Without explicit page access, MCP calls return permission errors even when the token is valid.
+   # Windows CMD
+   set NOTION_API_TOKEN=ntn_your_token_here
+   ```
 
-## 3) Platform setup options
+   To make this permanent, add it to your shell profile (`~/.zshrc`, `~/.bashrc`) or system environment variables on Windows.
 
+6. **Grant page access**: In Notion, open each page/database your agent needs → click **•••** (top right) → **Add connections** → select your integration.
+7. Confirm the integration name appears in the sharing panel.
+
+> **Important**: Without explicit page access, MCP calls return "Object not found" even when the token is valid. This is the #1 setup mistake.
+
+## 3) Connect Notion MCP to your agent platform
+
+Choose the option that matches your platform. All three produce the same result: your agent gets access to Notion's MCP tools.
 ### A. Claude Code (OpenCode MCP OAuth)
 
 Use remote MCP OAuth with the official endpoint:
@@ -34,10 +71,14 @@ Use remote MCP OAuth with the official endpoint:
 https://mcp.notion.com/mcp
 ```
 
-Typical flow:
-1. Add the Notion MCP server in your client MCP settings.
-2. Run client auth flow (for example: `opencode mcp auth notion`).
-3. Re-open session and verify tools are listed.
+Steps:
+1. Run the MCP auth command:
+   ```bash
+   opencode mcp auth notion
+   ```
+2. Follow the browser OAuth flow to authorize your Notion workspace.
+3. Restart your agent session.
+4. Verify tools are available by asking: "list my Notion tools" or checking the MCP tool list.
 
 Expected tools include:
 - `notion-fetch`
@@ -47,9 +88,17 @@ Expected tools include:
 - `notion-create-database`
 - `notion-create-view`
 
-### B. Cursor (mcp.json)
+### B. Cursor
 
-Create or update workspace-level `mcp.json` with a Notion entry:
+Add Notion MCP to your workspace configuration file.
+
+**File location**: `.cursor/mcp.json` in your project root (create the directory if it doesn't exist):
+
+```bash
+mkdir -p .cursor
+```
+
+**File content**:
 
 ```json
 {
@@ -62,11 +111,15 @@ Create or update workspace-level `mcp.json` with a Notion entry:
 }
 ```
 
-Then authenticate through Cursor's MCP auth prompt and restart the workspace.
+After saving, Cursor will prompt for OAuth authentication. Complete it, then restart the workspace.
 
-### C. Generic stdio runtime
+### C. Generic stdio (any MCP client)
 
-If your client does not support remote OAuth MCP, configure stdio with environment variable auth:
+Use this if your client doesn't support remote OAuth. This runs the Notion MCP server locally as a subprocess.
+
+**Requires**: Node.js v18+ (see Prerequisites above for installation).
+
+Add to your client's MCP configuration file (check your client's docs for the exact file path):
 
 ```json
 {
@@ -82,7 +135,9 @@ If your client does not support remote OAuth MCP, configure stdio with environme
 }
 ```
 
-Exact package or command name can vary by runtime distribution. Keep the `NOTION_API_TOKEN` binding and verify available tool names after startup.
+**What this does**: `npx -y @notionhq/notion-mcp-server` downloads and runs the official Notion MCP server package. The `-y` flag auto-confirms the download. Your agent client manages the subprocess lifecycle — you don't need to run it manually.
+
+**Make sure** `NOTION_API_TOKEN` is set in your environment before starting your agent (see step 2).
 
 ## 4) Verify connectivity
 
