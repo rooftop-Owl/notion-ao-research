@@ -1,0 +1,13 @@
+{
+  "name": "notion-ao-research",
+  "version": "1.0.0",
+  "description": "Agent-oriented research workflow skills for Notion. Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, or any other.",
+  "author": {
+    "name": "rooftop-Owl",
+    "url": "https://github.com/rooftop-Owl"
+  },
+  "homepage": "https://github.com/rooftop-Owl/notion-ao-research",
+  "repository": "https://github.com/rooftop-Owl/notion-ao-research",
+  "license": "MIT",
+  "keywords": ["notion", "research", "mcp", "workflow", "agent-skills"]
+}

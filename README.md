@@ -9,9 +9,9 @@ Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, 
 
 | Skill | Triggers | What it does |
 |-------|----------|-------------|
-| [notion-workspace](./notion-workspace/SKILL.md) | "set up Notion", "connect Notion MCP", "workspace config", "getting started" | Gateway skill: establishes MCP connectivity, initializes workspace config, and dispatches to the correct notion-* skill |
-| [notion-research](./notion-research/SKILL.md) | "add entry", "log experiment", "add paper", "mark complete", "what's on today" | Natural-language research operations with runtime database routing for add/query/update patterns |
-| [notion-bulletin](./notion-bulletin/SKILL.md) | "notion infra", "bulletin board", "open issue", "skill maintenance" | Infrastructure maintenance gate for notion-* skill changes, issue tracking, and architecture toggle updates |
+| [notion-workspace](./skills/notion-workspace/SKILL.md) | "set up Notion", "connect Notion MCP", "workspace config", "getting started" | Gateway skill: establishes MCP connectivity, initializes workspace config, and dispatches to the correct notion-* skill |
+| [notion-research](./skills/notion-research/SKILL.md) | "add entry", "log experiment", "add paper", "mark complete", "what's on today" | Natural-language research operations with runtime database routing for add/query/update patterns |
+| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | "notion infra", "bulletin board", "open issue", "skill maintenance" | Infrastructure maintenance gate for notion-* skill changes, issue tracking, and architecture toggle updates |
 
 ## Quick Start
 
@@ -19,40 +19,43 @@ Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, 
 2. **Register** — Create or generate your workspace configuration file
 3. **Operate** — Load the relevant skill and start using natural language
 
-→ See [notion-workspace/references/setup-guide.md](./notion-workspace/references/setup-guide.md) for detailed setup.
+→ See [notion-workspace/references/setup-guide.md](./skills/notion-workspace/references/setup-guide.md) for detailed setup.
 
 ## Platform Compatibility
 
 These skills use standard [Notion MCP](https://mcp.notion.com) tool names and work with any
 MCP-compatible agent platform. No platform-specific dependencies in the core skills.
-Platform-specific enhancements are documented in [notion-workspace/references/platform-integrations.md](./notion-workspace/references/platform-integrations.md).
+Platform-specific enhancements are documented in [notion-workspace/references/platform-integrations.md](./skills/notion-workspace/references/platform-integrations.md).
 
 ## Structure
 
 ```text
 notion-ao-research/
-├── notion-workspace/
-│   ├── SKILL.md
-│   ├── examples/
-│   │   └── workspace-config.md
-│   └── references/
-│       ├── setup-guide.md
-│       ├── workspace-config-spec.md
-│       └── platform-integrations.md
-├── notion-research/
-│   ├── SKILL.md
-│   ├── examples/
-│   │   └── schema-template.sql
-│   └── references/
-│       ├── diary-interface.md
-│       ├── multi-db-interface.md
-│       ├── cross-db-workflow.md
-│       ├── handoff-protocol.md
-│       └── api-patterns.md
-├── notion-bulletin/
-│   ├── SKILL.md
-│   └── references/
-│       └── lifecycle-patterns.md
+├── skills/
+│   ├── notion-workspace/
+│   │   ├── SKILL.md
+│   │   ├── examples/
+│   │   │   └── workspace-config.md
+│   │   └── references/
+│   │       ├── setup-guide.md
+│   │       ├── workspace-config-spec.md
+│   │       └── platform-integrations.md
+│   ├── notion-research/
+│   │   ├── SKILL.md
+│   │   ├── examples/
+│   │   │   └── schema-template.sql
+│   │   └── references/
+│   │       ├── diary-interface.md
+│   │       ├── multi-db-interface.md
+│   │       ├── cross-db-workflow.md
+│   │       ├── handoff-protocol.md
+│   │       └── api-patterns.md
+│   └── notion-bulletin/
+│       ├── SKILL.md
+│       └── references/
+│           └── lifecycle-patterns.md
+├── .claude-plugin/
+│   └── plugin.json
 ├── README.md
 └── LICENSE
 ```
