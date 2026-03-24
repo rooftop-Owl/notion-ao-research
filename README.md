@@ -36,7 +36,35 @@ git clone https://github.com/rooftop-Owl/notion-ao-research.git
 # Copy skills/ directory into your agent's skill path
 ```
 
-After installing, follow the [Setup Guide](./skills/notion-workspace/references/setup-guide.md) to connect the Notion MCP server.
+## Initial Configuration
+
+After installation, connect the Notion MCP server and register your workspace. Full details in the [Setup Guide](./skills/notion-workspace/references/setup-guide.md).
+
+> [!NOTE]
+> Steps 1-2 require browser actions. Your agent can guide you through each step and take over from step 3 onward.
+
+### For Humans
+
+1. **Create a Notion integration** — go to [notion.so/my-integrations](https://www.notion.so/my-integrations), create an internal integration, copy the token (`ntn_...`)
+2. **Grant page access** — open each Notion page/database → ••• → Add connections → select your integration
+3. **Connect MCP** — pick your platform:
+   - **Claude Code**: `claude mcp add notion -- npx -y @notionhq/notion-mcp-server` (set `NOTION_API_TOKEN` env var first)
+   - **Cursor**: add to `.cursor/mcp.json`:
+     ```json
+     { "mcpServers": { "notion": { "command": "npx", "args": ["-y", "@notionhq/notion-mcp-server"], "env": { "NOTION_API_TOKEN": "${NOTION_API_TOKEN}" } } } }
+     ```
+   - **Other MCP clients**: see [setup guide](./skills/notion-workspace/references/setup-guide.md#3-connect-notion-mcp-to-your-agent-platform)
+4. **Create workspace config** — copy the [template](./skills/notion-workspace/examples/workspace-config.md) to your project root as `NOTION_WORKSPACE.md` and fill in your database IDs
+
+### For Agents
+
+Tell your agent:
+
+```
+Set up Notion for this project.
+```
+
+The agent will load `notion-workspace`, walk you through token creation and page access (browser steps), then handle MCP connection, workspace config generation, and verification automatically. See the [Setup Guide](./skills/notion-workspace/references/setup-guide.md) for the full agent/human handoff protocol.
 
 ---
 
