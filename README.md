@@ -16,13 +16,20 @@ Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, 
 
 ## Installation
 
-### Claude Code
+### Claude Code (native plugin)
+
+```bash
+claude plugin marketplace add rooftop-Owl/notion-ao-research
+claude plugin install notion-ao-research
+```
+
+### Skills CLI (npx)
 
 ```bash
 npx --yes skills add rooftop-Owl/notion-ao-research
 ```
 
-### Manual (any platform)
+### Manual (any MCP-compatible platform)
 
 ```bash
 git clone https://github.com/rooftop-Owl/notion-ao-research.git
