@@ -70,4 +70,6 @@ notion-ao-research/
 
 ## License
 
-MIT — see [LICENSE](./LICENSE)
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — see [LICENSE](./LICENSE)
+
+You may use, share, and adapt this work for non-commercial purposes with attribution. Derivatives must use the same license.
