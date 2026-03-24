@@ -3,7 +3,8 @@ name: notion-research
 description: >-
   This skill should be used when the user wants to "add entry", "log work",
   "query schedule", "add milestone", "log experiment", "add paper", "mark complete",
-  "what's on today", "show experiments", "update status", or any other natural language
+  "what's on today", "show experiments", "update status", "session handoff",
+  "end session", "write handoff", "pass to local", or any other natural language
   operation on research tracking databases in Notion. Provides NL→database routing,
   API patterns, and operation conventions for any research workspace.
 license: CC-BY-NC-SA-4.0

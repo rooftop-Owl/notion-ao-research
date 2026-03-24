@@ -1,7 +1,7 @@
 {
   "name": "notion-ao-research",
-  "version": "1.1.0",
-  "description": "Agent-oriented research workflow skills for Notion. Natural-language database operations, workspace setup, infrastructure governance, and a design handbook. Works with any MCP-compatible agent platform.",
+  "version": "1.2.0",
+  "description": "Agent-oriented research workflow skills for Notion. NL database operations, workspace setup, research methodology with citation integrity, infrastructure governance, and a design handbook (EN/KO). Works with any MCP-compatible agent platform.",
   "author": {
     "name": "rooftop-Owl",
     "url": "https://github.com/rooftop-Owl"
@@ -25,7 +25,13 @@
     "notion-workspace",
     "notion-research",
     "notion-bulletin",
+    "research-methodology",
+    "writing-conventions",
+    "project-context",
     "markdown-documentation"
+  ],
+  "commands": [
+    "sync-context"
   ],
   "platforms": [
     "claude-code",

@@ -168,6 +168,12 @@ NL signals:
 
 Use `notion-search` scoped to catalog and filter by `<STATUS_PROP>`.
 
+> [!TIP]
+> **For academic papers with DOIs already in Zotero**: If a Zotero integration is available
+> in your workspace (e.g., a `zotero-notion-bridge` skill or Zotero-to-Notion sync),
+> prefer that path over manual literature entry. It ensures consistent metadata
+> (authors, year, DOI, abstract) without manual transcription.
+
 ## Writing Pipeline
 
 Use this pattern for manuscript/chapter workflow tracking.
