@@ -1,10 +1,21 @@
 ---
 name: notion-bulletin
-description: This skill should be used when creating, fixing, refactoring, or auditing
+description: >-
+  This skill should be used when creating, fixing, refactoring, or auditing
   notion-* skills or commands — NOT for ordinary content operations. Load when user
   mentions "notion skill maintenance", "open issue", "bulletin board", "notion infra",
-  "skill refactor", "architecture toggle". Provides the infrastructure maintenance gate
-  pattern, Bulletin Board DB lifecycle, and architecture documentation protocol.
+  "skill refactor", "architecture toggle". Provides the infrastructure maintenance
+  gate pattern, Bulletin Board DB lifecycle, and architecture documentation protocol.
+license: CC-BY-NC-SA-4.0
+metadata:
+  author: https://github.com/rooftop-Owl
+  version: "1.1.0"
+  domain: productivity
+  triggers: notion skill maintenance, open issue, bulletin board, notion infra, skill refactor, architecture toggle, infrastructure gate, close issue, log enhancement
+  role: specialist
+  scope: governance
+  output-format: api-calls
+  related-skills: notion-workspace, notion-research
 ---
 
 # Notion Bulletin

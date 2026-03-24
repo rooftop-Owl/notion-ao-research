@@ -3,7 +3,10 @@
 **Agent-Oriented Research Workflow Skills for Notion**
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
 [![Platform: Any MCP Client](https://img.shields.io/badge/Platform-Any%20MCP%20Client-blue.svg)](https://modelcontextprotocol.io)
+[![Skills: 4](https://img.shields.io/badge/Skills-4-orange.svg)](#skills)
+[![Handbook: EN + KO](https://img.shields.io/badge/Handbook-EN%20%2B%20KO-purple.svg)](#handbook)
 
 A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 3 marketplace-format agent skills, a human-readable design handbook (English + 한국어), and a markdown formatting skill.
 

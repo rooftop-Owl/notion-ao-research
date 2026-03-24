@@ -1,6 +1,21 @@
 ---
 name: notion-workspace
-description: This skill should be used when the user asks to "set up Notion", "connect Notion MCP", "create a notion workspace config", "configure Notion databases", "design a database", "create a new schema", "help me set up a DB", or "getting started with Notion". It establishes MCP connectivity, creates the workspace registry file, and routes requests to the correct Notion AO Research skill.
+description: >-
+  This skill should be used when the user asks to "set up Notion", "connect Notion MCP",
+  "create a notion workspace config", "configure Notion databases", "design a database",
+  "create a new schema", "help me set up a DB", or "getting started with Notion".
+  Establishes MCP connectivity, creates the workspace registry file, and routes to
+  the correct notion-ao-research skill.
+license: CC-BY-NC-SA-4.0
+metadata:
+  author: https://github.com/rooftop-Owl
+  version: "1.1.0"
+  domain: productivity
+  triggers: set up Notion, connect MCP, workspace config, design database, create schema, getting started, Notion setup, MCP configuration
+  role: gateway
+  scope: setup
+  output-format: configuration
+  related-skills: notion-research, notion-bulletin, markdown-documentation
 ---
 
 # notion-workspace
