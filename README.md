@@ -2,74 +2,128 @@
 
 **Agent-Oriented Research Workflow Skills for Notion**
 
-A family of 3 marketplace-format skills for [Notion MCP](https://mcp.notion.com) integration.
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Platform: Any MCP Client](https://img.shields.io/badge/Platform-Any%20MCP%20Client-blue.svg)](https://modelcontextprotocol.io)
+
+A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 3 marketplace-format agent skills, a human-readable design handbook (English + 한국어), and a markdown formatting skill.
+
 Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, or any other.
+
+---
+
+## Installation
+
+### Claude Code
+
+```bash
+npx --yes skills add rooftop-Owl/notion-ao-research
+```
+
+### Manual (any platform)
+
+```bash
+git clone https://github.com/rooftop-Owl/notion-ao-research.git
+# Copy skills/ directory into your agent's skill path
+```
+
+After installing, follow the [Setup Guide](./skills/notion-workspace/references/setup-guide.md) to connect the Notion MCP server.
+
+---
 
 ## Skills
 
 | Skill | Triggers | What it does |
 |-------|----------|-------------|
-| [notion-workspace](./skills/notion-workspace/SKILL.md) | "set up Notion", "connect Notion MCP", "workspace config", "getting started" | Gateway skill: establishes MCP connectivity, initializes workspace config, and dispatches to the correct notion-* skill |
-| [notion-research](./skills/notion-research/SKILL.md) | "add entry", "log experiment", "add paper", "mark complete", "what's on today" | Natural-language research operations with runtime database routing for add/query/update patterns |
-| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | "notion infra", "bulletin board", "open issue", "skill maintenance" | Infrastructure maintenance gate for notion-* skill changes, issue tracking, and architecture toggle updates |
+| [notion-workspace](./skills/notion-workspace/SKILL.md) | "set up Notion", "connect MCP", "workspace config" | Gateway: MCP setup, workspace registration, skill dispatch |
+| [notion-research](./skills/notion-research/SKILL.md) | "add entry", "log experiment", "mark complete" | NL research operations — add/query/update across any database pattern |
+| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | "notion infra", "open issue", "skill maintenance" | Infrastructure maintenance gate for skill changes and issue tracking |
+| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | "write markdown", "format docs" | Markdown formatting reference (GFM, callouts, diagrams) |
 
 ## Quick Start
 
-1. **Connect** — Add the Notion MCP server to your agent platform
-2. **Register** — Create or generate your workspace configuration file
-3. **Operate** — Load the relevant skill and start using natural language
+1. **Install** — Clone or `npx skills add` this repo
+2. **Connect** — Add the Notion MCP server to your agent platform
+3. **Register** — Create your workspace config file ([template](./skills/notion-workspace/examples/workspace-config.md))
+4. **Operate** — Load the relevant skill and start using natural language
 
-→ See [notion-workspace/references/setup-guide.md](./skills/notion-workspace/references/setup-guide.md) for detailed setup.
+→ [Detailed setup guide](./skills/notion-workspace/references/setup-guide.md)
 
-## Platform Compatibility
-
-These skills use standard [Notion MCP](https://mcp.notion.com) tool names and work with any
-MCP-compatible agent platform. No platform-specific dependencies in the core skills.
-Platform-specific enhancements are documented in [notion-workspace/references/platform-integrations.md](./skills/notion-workspace/references/platform-integrations.md).
+---
 
 ## Handbook
 
-Human-readable guides for learning Notion workspace design:
+Human-readable guides for learning Notion workspace design. Available in English and 한국어.
 
-- [Principles & Anti-Patterns](./handbook/principles-and-antipatterns.md) — The 3 rules that matter
-- [Design Methodology](./handbook/design-methodology.md) — Master tables, input sections, status lifecycles
-- [Formulas & Automation](./handbook/formulas-and-automation.md) — Formula 2.0 and automation patterns
+### English
+
+1. [Principles & Anti-Patterns](./handbook/en/principles-and-antipatterns.md) — The 3 rules that matter
+2. [Design Methodology](./handbook/en/design-methodology.md) — Master tables, input sections, status lifecycles
+3. [Formulas & Automation](./handbook/en/formulas-and-automation.md) — Formula 2.0 and automation patterns
+
+### 한국어
+
+1. [원칙과 안티패턴](./handbook/ko/principles-and-antipatterns.md) — 이쁜 쓰레기와 좋은 워크스페이스를 가르는 3가지 원칙
+2. [설계 방법론](./handbook/ko/design-methodology.md) — 마스터 테이블, 인풋 섹션, 상태 라이프사이클
+3. [수식과 자동화](./handbook/ko/formulas-and-automation.md) — Formula 2.0, 조건문, 자동화 패턴
+
+---
+
+## Platform Compatibility
+
+These skills use standard [Notion MCP](https://mcp.notion.com) tool names and work with any MCP-compatible agent platform. No platform-specific dependencies in the core skills.
+
+Platform-specific enhancements (astraeus, Cursor, etc.) are documented in [platform-integrations.md](./skills/notion-workspace/references/platform-integrations.md).
+
+---
 
 ## Structure
 
 ```text
 notion-ao-research/
-├── skills/
-│   ├── notion-workspace/
-│   │   ├── SKILL.md
-│   │   ├── examples/
-│   │   │   └── workspace-config.md
-│   │   └── references/
-│   │       ├── setup-guide.md
-│   │       ├── workspace-config-spec.md
-│   │       └── platform-integrations.md
-│   ├── notion-research/
-│   │   ├── SKILL.md
-│   │   ├── examples/
-│   │   │   └── schema-template.sql
-│   │   └── references/
-│   │       ├── diary-interface.md
-│   │       ├── multi-db-interface.md
-│   │       ├── cross-db-workflow.md
-│   │       ├── handoff-protocol.md
-│   │       └── api-patterns.md
-│   └── notion-bulletin/
-│       ├── SKILL.md
-│       └── references/
-│           └── lifecycle-patterns.md
 ├── .claude-plugin/
 │   └── plugin.json
+├── skills/
+│   ├── notion-workspace/           # Gateway: setup + config
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   │   ├── setup-guide.md
+│   │   │   ├── workspace-config-spec.md
+│   │   │   ├── platform-integrations.md
+│   │   │   └── schema-design.md
+│   │   └── examples/
+│   │       └── workspace-config.md
+│   ├── notion-research/            # NL research operations
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   │   ├── diary-interface.md
+│   │   │   ├── multi-db-interface.md
+│   │   │   ├── cross-db-workflow.md
+│   │   │   ├── handoff-protocol.md
+│   │   │   └── api-patterns.md
+│   │   └── examples/
+│   │       └── schema-template.sql
+│   ├── notion-bulletin/            # Infrastructure gate
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── lifecycle-patterns.md
+│   └── markdown-documentation/     # Markdown formatting (MIT)
+│       ├── SKILL.md
+│       ├── references/
+│       └── templates/
+├── handbook/
+│   ├── README.md
+│   ├── en/                         # English handbook
+│   └── ko/                         # 한국어 핸드북
 ├── README.md
-└── LICENSE
+└── LICENSE                         # CC BY-NC-SA 4.0
 ```
+
+---
 
 ## License
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — see [LICENSE](./LICENSE)
 
-You may use, share, and adapt this work for non-commercial purposes with attribution. Derivatives must use the same license.
+You may use, share, and adapt this work for **non-commercial purposes** with attribution. Derivatives must use the same license.
+
+> `skills/markdown-documentation/` is third-party content under the [MIT License](https://opensource.org/licenses/MIT) (from [aj-geddes/useful-ai-prompts](https://github.com/aj-geddes/useful-ai-prompts)).
