@@ -21,22 +21,6 @@
     "workspace-management",
     "productivity"
   ],
-  "skills": [
-    "notion-workspace",
-    "notion-research",
-    "notion-bulletin",
-    "research-methodology",
-    "writing-conventions",
-    "project-context",
-    "markdown-documentation"
-  ],
-  "commands": [
-    "sync-context"
-  ],
-  "platforms": [
-    "claude-code",
-    "cursor",
-    "windsurf",
-    "generic-mcp"
-  ]
+  "category": "productivity",
+  "tags": ["notion", "mcp", "research", "agent-skills", "database-design"]
 }
