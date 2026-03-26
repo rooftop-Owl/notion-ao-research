@@ -6,9 +6,6 @@
     "name": "rooftop-Owl",
     "url": "https://github.com/rooftop-Owl"
   },
-  "homepage": "https://github.com/rooftop-Owl/notion-ao-research",
-  "repository": "https://github.com/rooftop-Owl/notion-ao-research",
-  "license": "CC-BY-NC-SA-4.0",
   "keywords": [
     "notion",
     "research",
@@ -20,7 +17,5 @@
     "natural-language",
     "workspace-management",
     "productivity"
-  ],
-  "category": "productivity",
-  "tags": ["notion", "mcp", "research", "agent-skills", "database-design"]
+  ]
 }

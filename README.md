@@ -158,6 +158,28 @@ notion-ao-research/
 
 ---
 
+## Cowork Marketplace Setup
+
+When uploading this plugin to a [Cowork](https://cowork.ai) marketplace, you need a `marketplace.json` placed **one directory above** the plugin folder. This file tells the marketplace what plugin it contains and where to find it.
+
+Create `marketplace.json` at the same level as the `notion-ao-research/` directory:
+
+```json
+{
+  "name": "my-marketplace",
+  "version": "1.0.0",
+  "description": "My Cowork plugin marketplace",
+  "owner": { "name": "rooftop-Owl" },
+  "plugins": [
+    { "name": "notion-ao-research", "version": "1.2.0", "source": "./notion-ao-research" }
+  ]
+}
+```
+
+The `source` path must point to the directory that contains `.claude-plugin/plugin.json`.
+
+---
+
 ## License
 
 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — see [LICENSE](./LICENSE)
