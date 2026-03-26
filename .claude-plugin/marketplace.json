@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "notion-ao-research",
-      "source": ".",
+      "source": "./",
       "description": "NL database operations, workspace setup, research methodology, infrastructure governance, and a design handbook (EN/KO). Works with any MCP-compatible agent platform.",
       "version": "1.2.0",
       "author": {
