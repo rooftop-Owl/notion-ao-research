@@ -5,10 +5,10 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
 [![Platform: Any MCP Client](https://img.shields.io/badge/Platform-Any%20MCP%20Client-blue.svg)](https://modelcontextprotocol.io)
-[![Skills: 4](https://img.shields.io/badge/Skills-4-orange.svg)](#skills)
+[![Skills: 7](https://img.shields.io/badge/Skills-7-orange.svg)](#skills)
 [![Handbook: EN + KO](https://img.shields.io/badge/Handbook-EN%20%2B%20KO-purple.svg)](#handbook)
 
-A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 4 marketplace-format agent skills, a human-readable design handbook (English + 한국어), and a markdown formatting skill.
+A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 7 agent skills (4 Notion workflow + 3 research methodology), a human-readable design handbook (English + 한국어), and a markdown formatting skill.
 
 Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, or any other.
 
@@ -75,8 +75,10 @@ The agent will load `notion-workspace`, walk you through token creation and page
 | [notion-workspace](./skills/notion-workspace/SKILL.md) | "set up Notion", "connect MCP", "workspace config" | Gateway: MCP setup, workspace registration, skill dispatch |
 | [notion-research](./skills/notion-research/SKILL.md) | "add entry", "log experiment", "mark complete" | NL research operations — add/query/update across any database pattern |
 | [notion-bulletin](./skills/notion-bulletin/SKILL.md) | "notion infra", "open issue", "skill maintenance" | Infrastructure maintenance gate for skill changes and issue tracking |
-| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | "write markdown", "format docs" | Markdown formatting reference (GFM, callouts, diagrams) |
-
+| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | "write markdown", "format docs" | Markdown formatting reference (GFM, callouts, diagrams, LaTeX, code blocks) |
+| [project-context](./skills/project-context/SKILL.md) | "project context", "current priorities", "sync context" | Fetches project hub from Notion to surface current state before research tasks |
+| [research-methodology](./skills/research-methodology/SKILL.md) | "research methodology", "citation standards", "Two-Zone Model" | Foundational research principles — citation fidelity, calibrated uncertainty, evidence quality |
+| [writing-conventions](./skills/writing-conventions/SKILL.md) | "academic writing", "calibrated language", "citation quality" | Writing standards, uncertainty language, citation quality gates for research output |
 ## Quick Start
 
 1. **Install** — Clone or `npx skills add` this repo
@@ -140,7 +142,6 @@ notion-ao-research/
 │   │   │   ├── diary-interface.md
 │   │   │   ├── handoff-protocol.md
 │   │   │   ├── multi-db-interface.md
-│   │   │   └── api-patterns.md
 │   │   └── examples/
 │   │       └── schema-template.sql
 │   ├── notion-bulletin/            # Infrastructure gate
