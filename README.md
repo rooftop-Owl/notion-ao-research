@@ -3,12 +3,12 @@
 **Agent-Oriented Research Workflow Skills for Notion**
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
+[![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
 [![Platform: Any MCP Client](https://img.shields.io/badge/Platform-Any%20MCP%20Client-blue.svg)](https://modelcontextprotocol.io)
 [![Skills: 4](https://img.shields.io/badge/Skills-4-orange.svg)](#skills)
 [![Handbook: EN + KO](https://img.shields.io/badge/Handbook-EN%20%2B%20KO-purple.svg)](#handbook)
 
-A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 3 marketplace-format agent skills, a human-readable design handbook (English + 한국어), and a markdown formatting skill.
+A skill package for AI agents that work with [Notion](https://notion.so) through the [Model Context Protocol](https://modelcontextprotocol.io). Includes 4 marketplace-format agent skills, a human-readable design handbook (English + 한국어), and a markdown formatting skill.
 
 Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, or any other.
 
@@ -119,6 +119,7 @@ Platform-specific enhancements (astraeus, Cursor, etc.) are documented in [platf
 ```text
 notion-ao-research/
 ├── .claude-plugin/
+│   ├── marketplace.json
 │   └── plugin.json
 ├── skills/
 │   ├── notion-workspace/           # Gateway: setup + config
@@ -133,10 +134,12 @@ notion-ao-research/
 │   ├── notion-research/            # NL research operations
 │   │   ├── SKILL.md
 │   │   ├── references/
-│   │   │   ├── diary-interface.md
-│   │   │   ├── multi-db-interface.md
+│   │   │   ├── advanced-api.md
+│   │   │   ├── api-patterns.md
 │   │   │   ├── cross-db-workflow.md
+│   │   │   ├── diary-interface.md
 │   │   │   ├── handoff-protocol.md
+│   │   │   ├── multi-db-interface.md
 │   │   │   └── api-patterns.md
 │   │   └── examples/
 │   │       └── schema-template.sql
@@ -144,10 +147,28 @@ notion-ao-research/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       └── lifecycle-patterns.md
-│   └── markdown-documentation/     # Markdown formatting (MIT)
-│       ├── SKILL.md
-│       ├── references/
-│       └── templates/
+│   ├── markdown-documentation/     # Markdown formatting (MIT)
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   │   ├── alerts-and-callouts.md
+│   │   │   ├── collapsible-sections.md
+│   │   │   ├── extended-syntax-github-flavored-markdown.md
+│   │   │   ├── formula-and-code-blocks.md
+│   │   │   ├── links-and-images.md
+│   │   │   ├── lists.md
+│   │   │   ├── mermaid-diagrams.md
+│   │   │   └── text-formatting.md
+│   │   └── templates/
+│   │       └── doc-template.md
+│   ├── project-context/            # Project context template
+│   │   └── SKILL.md
+│   ├── research-methodology/       # Research methodology + citation
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── citation-protocol.md
+│   │       └── two-zone-model.md
+│   └── writing-conventions/        # Writing style conventions
+│       └── SKILL.md
 ├── handbook/
 │   ├── README.md
 │   ├── en/                         # English handbook
