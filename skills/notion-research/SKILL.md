@@ -90,4 +90,5 @@ When intent does not map cleanly to a known pattern:
 - `references/cross-db-workflow.md` — Hub-and-spoke, relation linking, filtered views
 - `references/handoff-protocol.md` — Session state persistence (CURRENT/NEXT/BLOCKERS)
 - `references/api-patterns.md` — Shared MCP API call shapes
+- `references/advanced-api.md` — Markdown API, pagination, rate limiting, Notion-Flavored MD, Python client patterns, advanced property shapes (salvaged from notion-io)
 - `examples/schema-template.sql` — Blank schema templates for common patterns

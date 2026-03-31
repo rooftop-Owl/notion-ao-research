@@ -66,6 +66,10 @@ Detailed implementations in the `references/` directory:
 | [Alerts and Callouts](references/alerts-and-callouts.md) | Alerts and Callouts |
 | [Mermaid Diagrams](references/mermaid-diagrams.md) | Mermaid Diagrams |
 
+## Additional Resources
+
+- `references/formula-and-code-blocks.md` — LaTeX block/inline equations (KaTeX), language-tagged code blocks, anti-pattern table
+
 ## Best Practices
 
 ### ✅ DO
