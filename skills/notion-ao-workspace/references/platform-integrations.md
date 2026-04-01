@@ -1,6 +1,6 @@
 # Platform Integrations
 
-This document contains optional platform-specific enhancements for the `notion-workspace` setup.
+This document contains optional platform-specific enhancements for the `notion-ao-workspace` setup.
 
 Core setup remains portable; use this file only when platform features can reduce manual maintenance.
 

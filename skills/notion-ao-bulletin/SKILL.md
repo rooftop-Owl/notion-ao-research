@@ -1,21 +1,21 @@
 ---
-name: notion-bulletin
+name: notion-ao-bulletin
 description: >-
   This skill should be used when creating, fixing, refactoring, or auditing
-  notion-* skills or commands — NOT for ordinary content operations. Load when user
+  notion-ao-* skills or commands — NOT for ordinary content operations. Load when user
   mentions "notion skill maintenance", "open issue", "bulletin board", "notion infra",
   "skill refactor", "architecture toggle". Provides the infrastructure maintenance
   gate pattern, Bulletin Board DB lifecycle, and architecture documentation protocol.
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: productivity
   triggers: notion skill maintenance, open issue, bulletin board, notion infra, skill refactor, architecture toggle, infrastructure gate, close issue, log enhancement
   role: specialist
   scope: governance
   output-format: api-calls
-  related-skills: notion-workspace, notion-research
+  related-skills: notion-ao-workspace, notion-ao-ops
 ---
 
 # Notion Bulletin
@@ -79,7 +79,7 @@ Maintain these six canonical toggles on the Bulletin Board page:
 2. **Database Disambiguation** — how to distinguish workspace-wide databases from project-local databases.
 3. **Page Layering Model** — lab-facing pages vs internal workflow pages.
 4. **Skill Family Map** — the `notion-*` skill tree and ownership boundaries.
-5. **Tool Architecture — notion-research module** — the 3-layer stack (Skills → MCP → API).
+5. **Tool Architecture — notion-ao-research module** — the 3-layer stack (Skills → MCP → API).
 6. **Workspace Page Hierarchy** — authoritative full page tree.
 
 When architecture changes, update the affected toggle text in the same session.

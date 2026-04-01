@@ -3,7 +3,7 @@
 **Agent-Oriented Research Workflow Skills for Notion**
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
+[![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-green.svg)](https://github.com/rooftop-Owl/notion-ao-research/releases)
 [![Platform: Any MCP Client](https://img.shields.io/badge/Platform-Any%20MCP%20Client-blue.svg)](https://modelcontextprotocol.io)
 [![Skills: 7](https://img.shields.io/badge/Skills-7-orange.svg)](#skills)
 [![Handbook: EN + KO](https://img.shields.io/badge/Handbook-EN%20%2B%20KO-purple.svg)](#handbook)
@@ -38,7 +38,7 @@ git clone https://github.com/rooftop-Owl/notion-ao-research.git
 
 ## Initial Configuration
 
-After installation, connect the Notion MCP server and register your workspace. Full details in the [Setup Guide](./skills/notion-workspace/references/setup-guide.md).
+After installation, connect the Notion MCP server and register your workspace. Full details in the [Setup Guide](./skills/notion-ao-workspace/references/setup-guide.md).
 
 > [!NOTE]
 > Steps 1-2 require browser actions. Your agent can guide you through each step and take over from step 3 onward.
@@ -53,8 +53,8 @@ After installation, connect the Notion MCP server and register your workspace. F
      ```json
      { "mcpServers": { "notion": { "command": "npx", "args": ["-y", "@notionhq/notion-mcp-server"], "env": { "NOTION_API_TOKEN": "${NOTION_API_TOKEN}" } } } }
      ```
-   - **Other MCP clients**: see [setup guide](./skills/notion-workspace/references/setup-guide.md#3-connect-notion-mcp-to-your-agent-platform)
-4. **Create workspace config** — copy the [template](./skills/notion-workspace/examples/workspace-config.md) to your project root as `NOTION_WORKSPACE.md` and fill in your database IDs
+   - **Other MCP clients**: see [setup guide](./skills/notion-ao-workspace/references/setup-guide.md#3-connect-notion-mcp-to-your-agent-platform)
+4. **Create workspace config** — copy the [template](./skills/notion-ao-workspace/examples/workspace-config.md) to your project root as `NOTION_WORKSPACE.md` and fill in your database IDs
 
 ### For Agents
 
@@ -64,7 +64,7 @@ Tell your agent:
 Set up Notion for this project.
 ```
 
-The agent will load `notion-workspace`, walk you through token creation and page access (browser steps), then handle MCP connection, workspace config generation, and verification automatically. See the [Setup Guide](./skills/notion-workspace/references/setup-guide.md) for the full agent/human handoff protocol.
+The agent will load `notion-ao-workspace`, walk you through token creation and page access (browser steps), then handle MCP connection, workspace config generation, and verification automatically. See the [Setup Guide](./skills/notion-ao-workspace/references/setup-guide.md) for the full agent/human handoff protocol.
 
 ---
 
@@ -72,23 +72,23 @@ The agent will load `notion-workspace`, walk you through token creation and page
 
 | Skill | When to load | What it does |
 |-------|-------------|-------------|
-| [notion-workspace](./skills/notion-workspace/SKILL.md) | First-time project setup, or if MCP connection needs reconfiguring | Gateway: MCP setup, workspace registration, routes to the right skill |
-| [notion-research](./skills/notion-research/SKILL.md) | Any routine database op — "add entry", "log experiment", "mark complete" | NL → database operations: add/query/update across diary, milestones, experiments, papers, notes |
-| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | Modifying the Notion skill family itself (not for everyday research work) | Infrastructure gate: tracks open issues, logs enhancements, enforces session-close protocol |
-| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | Writing READMEs, docs, or formatting GFM — tables, callouts, diagrams, LaTeX | Complete GFM reference: alerts, collapsibles, Mermaid diagrams, LaTeX, code blocks |
-| [project-context](./skills/project-context/SKILL.md) | Start of any research session — orients the agent to active priorities | Fetches the Project Hub page from Notion to surface current state before research tasks |
-| [research-methodology](./skills/research-methodology/SKILL.md) | Literature work, citing sources, evaluating evidence, designing Two-Zone workspaces | Citation fidelity, calibrated uncertainty language, evidence quality tiers, Two-Zone model |
-| [writing-conventions](./skills/writing-conventions/SKILL.md) | Finalizing manuscripts, polishing academic prose, enforcing consistent hedging language | Writing standards: uncertainty language, citation quality gates, document quality checklist |
+| [notion-ao-workspace](./skills/notion-ao-workspace/SKILL.md) | First-time project setup, or if MCP connection needs reconfiguring | Gateway: MCP setup, workspace registration, routes to the right skill |
+| [notion-ao-ops](./skills/notion-ao-ops/SKILL.md) | Any routine database op — "add entry", "log experiment", "mark complete" | NL → database operations: add/query/update across diary, milestones, experiments, papers, notes |
+| [notion-ao-bulletin](./skills/notion-ao-bulletin/SKILL.md) | Modifying the Notion skill family itself (not for everyday research work) | Infrastructure gate: tracks open issues, logs enhancements, enforces session-close protocol |
+| [notion-ao-markdown-documentation](./skills/notion-ao-markdown-documentation/SKILL.md) | Writing READMEs, docs, or formatting GFM — tables, callouts, diagrams, LaTeX | Complete GFM reference: alerts, collapsibles, Mermaid diagrams, LaTeX, code blocks |
+| [notion-ao-project-context](./skills/notion-ao-project-context/SKILL.md) | Start of any research session — orients the agent to active priorities | Fetches the Project Hub page from Notion to surface current state before research tasks |
+| [notion-ao-research-methodology](./skills/notion-ao-research-methodology/SKILL.md) | Literature work, citing sources, evaluating evidence, designing Two-Zone workspaces | Citation fidelity, calibrated uncertainty language, evidence quality tiers, Two-Zone model |
+| [notion-ao-writing-conventions](./skills/notion-ao-writing-conventions/SKILL.md) | Finalizing manuscripts, polishing academic prose, enforcing consistent hedging language | Writing standards: uncertainty language, citation quality gates, document quality checklist |
 
 
 ## Quick Start
 
 1. **Install** — Clone or `npx skills add` this repo
 2. **Connect** — Add the Notion MCP server to your agent platform
-3. **Register** — Create your workspace config file ([template](./skills/notion-workspace/examples/workspace-config.md))
+3. **Register** — Create your workspace config file ([template](./skills/notion-ao-workspace/examples/workspace-config.md))
 4. **Operate** — Load the relevant skill and start using natural language
 
-→ [Detailed setup guide](./skills/notion-workspace/references/setup-guide.md)
+→ [Detailed setup guide](./skills/notion-ao-workspace/references/setup-guide.md)
 
 ---
 
@@ -114,7 +114,7 @@ Human-readable guides for learning Notion workspace design. Available in English
 
 These skills use standard [Notion MCP](https://mcp.notion.com) tool names and work with any MCP-compatible agent platform. No platform-specific dependencies in the core skills.
 
-Platform-specific enhancements (astraeus, Cursor, etc.) are documented in [platform-integrations.md](./skills/notion-workspace/references/platform-integrations.md).
+Platform-specific enhancements (astraeus, Cursor, etc.) are documented in [platform-integrations.md](./skills/notion-ao-workspace/references/platform-integrations.md).
 
 ---
 
@@ -126,7 +126,7 @@ notion-ao-research/
 │   ├── marketplace.json
 │   └── plugin.json
 ├── skills/
-│   ├── notion-workspace/           # Gateway: setup + config
+│   ├── notion-ao-workspace/           # Gateway: setup + config
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   │   ├── setup-guide.md
@@ -135,7 +135,7 @@ notion-ao-research/
 │   │   │   └── schema-design.md
 │   │   └── examples/
 │   │       └── workspace-config.md
-│   ├── notion-research/            # NL research operations
+│   ├── notion-ao-ops/                 # NL research operations
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   │   ├── advanced-api.md
@@ -146,11 +146,11 @@ notion-ao-research/
 │   │   │   ├── multi-db-interface.md
 │   │   └── examples/
 │   │       └── schema-template.sql
-│   ├── notion-bulletin/            # Infrastructure gate
+│   ├── notion-ao-bulletin/            # Infrastructure gate
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       └── lifecycle-patterns.md
-│   ├── markdown-documentation/     # Markdown formatting (MIT)
+│   ├── notion-ao-markdown-documentation/  # Markdown formatting (MIT)
 │   │   ├── SKILL.md
 │   │   ├── references/
 │   │   │   ├── alerts-and-callouts.md
@@ -163,14 +163,14 @@ notion-ao-research/
 │   │   │   └── text-formatting.md
 │   │   └── templates/
 │   │       └── doc-template.md
-│   ├── project-context/            # Project context template
+│   ├── notion-ao-project-context/     # Project context template
 │   │   └── SKILL.md
-│   ├── research-methodology/       # Research methodology + citation
+│   ├── notion-ao-research-methodology/ # Research methodology + citation
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       ├── citation-protocol.md
 │   │       └── two-zone-model.md
-│   └── writing-conventions/        # Writing style conventions
+│   └── notion-ao-writing-conventions/  # Writing style conventions
 │       └── SKILL.md
 ├── handbook/
 │   ├── README.md
@@ -195,7 +195,7 @@ Create `marketplace.json` at the same level as the `notion-ao-research/` directo
   "description": "My Cowork plugin marketplace",
   "owner": { "name": "rooftop-Owl" },
   "plugins": [
-    { "name": "notion-ao-research", "version": "1.2.0", "source": "./notion-ao-research" }
+    { "name": "notion-ao-research", "version": "1.3.0", "source": "./notion-ao-research" }
   ]
 }
 ```
@@ -210,4 +210,4 @@ The `source` path must point to the directory that contains `.claude-plugin/plug
 
 You may use, share, and adapt this work for **non-commercial purposes** with attribution. Derivatives must use the same license.
 
-> `skills/markdown-documentation/` is third-party content under the [MIT License](https://opensource.org/licenses/MIT) (from [aj-geddes/useful-ai-prompts](https://github.com/aj-geddes/useful-ai-prompts)).
+> `skills/notion-ao-markdown-documentation/` is third-party content under the [MIT License](https://opensource.org/licenses/MIT) (from [aj-geddes/useful-ai-prompts](https://github.com/aj-geddes/useful-ai-prompts)).

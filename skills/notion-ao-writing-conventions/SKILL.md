@@ -1,5 +1,5 @@
 ---
-name: writing-conventions
+name: notion-ao-writing-conventions
 description: >-
   This skill should be used when the user asks for help with any writing task —
   "academic paper", "literature review", "research notes", "documentation",
@@ -9,13 +9,13 @@ description: >-
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: research
   triggers: academic writing, literature review, research notes, calibrated language, citation quality, writing style, uncertainty language, document quality
   role: specialist
   scope: writing
   output-format: guidelines
-  related-skills: research-methodology, notion-research
+  related-skills: notion-ao-research-methodology, notion-ao-ops
 ---
 
 # Writing Conventions

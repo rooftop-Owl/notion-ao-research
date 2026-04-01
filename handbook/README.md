@@ -31,5 +31,5 @@ A human-readable guide to Notion workspace architecture, formulas, and best prac
 ## For Agents
 
 If you're an LLM agent helping a user design a Notion workspace, load
-`skills/notion-workspace` — the `references/schema-design.md` file has your decision trees.
+`skills/notion-ao-workspace` — the `references/schema-design.md` file has your decision trees.
 This handbook is for humans.

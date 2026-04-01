@@ -222,7 +222,7 @@ Then run one MCP tool probe:
 4. Fill the **Database Registry** table in `NOTION_WORKSPACE.md`.
 5. Add DDL snippets for each database in **Database Schemas**.
 6. Add key project pages in **Project Pages** with page IDs and purpose notes.
-7. Save the file — the workspace is now configured for all notion-research skills.
+7. Save the file — the workspace is now configured for all notion-ao-ops skills.
 
 ### Optional auto-generation
 

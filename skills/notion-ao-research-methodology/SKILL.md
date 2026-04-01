@@ -1,5 +1,5 @@
 ---
-name: research-methodology
+name: notion-ao-research-methodology
 description: >-
   This skill should be used when working on any research task, when the user asks
   about "research methodology", "citation standards", "Two-Zone Model", "research
@@ -9,13 +9,13 @@ description: >-
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: research
   triggers: research methodology, citation standards, Two-Zone Model, research integrity, citation needed, calibrated uncertainty, evidence quality
   role: specialist
   scope: methodology
   output-format: guidelines
-  related-skills: writing-conventions, project-context, notion-research
+  related-skills: notion-ao-writing-conventions, notion-ao-project-context, notion-ao-ops
 ---
 
 # Research Methodology

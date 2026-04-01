@@ -1,9 +1,21 @@
 ---
-name: markdown-documentation
-description: >
-  Master markdown formatting, GitHub Flavored Markdown, README files, and
-  documentation formatting. Use when writing markdown docs, READMEs, or
-  formatting documentation.
+name: notion-ao-markdown-documentation
+description: >-
+  This skill should be used when writing markdown docs, READMEs, or formatting any
+  GFM content. Covers GitHub Flavored Markdown syntax, callouts/alerts, collapsible
+  sections, Mermaid diagrams, LaTeX formulas and code blocks (including
+  Notion-flavored variants), tables, links, and text formatting patterns. Load when
+  producing or reviewing any markdown-formatted document.
+license: MIT
+metadata:
+  author: https://github.com/aj-geddes/useful-ai-prompts
+  version: "1.3.0"
+  domain: documentation
+  triggers: write markdown, format docs, README, GitHub Flavored Markdown, GFM, mermaid diagram, LaTeX formula, code block, callout, alert, table formatting, collapsible section
+  role: reference
+  scope: formatting
+  output-format: formatted-text
+  related-skills: notion-ao-writing-conventions
 ---
 
 # Markdown Documentation

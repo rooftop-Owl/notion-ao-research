@@ -1,5 +1,5 @@
 ---
-name: project-context
+name: notion-ao-project-context
 description: >-
   This skill should be used when the user asks about "project context", "current
   priorities", "what are we working on", "active decisions", "recent handoffs",
@@ -8,13 +8,13 @@ description: >-
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: research
   triggers: project context, current priorities, what are we working on, active decisions, recent handoffs, sync context, session start
   role: specialist
   scope: context
   output-format: summary
-  related-skills: notion-research, research-methodology
+  related-skills: notion-ao-ops, notion-ao-research-methodology
 ---
 
 # Project Context Skill

@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Agent-oriented research workflow skills for Notion MCP",
-    "version": "1.2.0"
+    "version": "1.3.0"
   },
   "plugins": [
     {
       "name": "notion-ao-research",
       "source": "./",
       "description": "NL database operations, workspace setup, research methodology, infrastructure governance, and a design handbook (EN/KO). Works with any MCP-compatible agent platform.",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "author": {
         "name": "rooftop-Owl"
       },

@@ -1,21 +1,21 @@
 ---
-name: notion-workspace
+name: notion-ao-workspace
 description: >-
   This skill should be used when the user asks to "set up Notion", "connect Notion MCP",
   "create a notion workspace config", "configure Notion databases", "design a database",
   "create a new schema", "help me set up a DB", or "getting started with Notion".
   Establishes MCP connectivity, creates the workspace registry file, and routes to
-  the correct notion-ao-research skill.
+  the correct notion-ao-* skill.
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: productivity
   triggers: set up Notion, connect MCP, workspace config, design database, create schema, getting started, Notion setup, MCP configuration
   role: gateway
   scope: setup
   output-format: configuration
-  related-skills: notion-research, notion-bulletin, markdown-documentation
+  related-skills: notion-ao-ops, notion-ao-bulletin, notion-ao-markdown-documentation
 ---
 
 # notion-workspace
@@ -46,7 +46,7 @@ This skill does not perform day-to-day database operations. After setup, route o
 
 3. **Load research skills**
    - Use this skill for setup and registration only.
-   - Route daily operations to `notion-research`, `notion-bulletin`, or `notion-page-designer`.
+   - Route daily operations to `notion-ao-ops`, `notion-ao-bulletin`, or `notion-page-designer`.
 
 ## Runtime Resolution
 
@@ -68,9 +68,9 @@ If `NOTION_WORKSPACE.md` is missing, stale, or ambiguous, stop execution and req
 
 | Skill | Trigger Phrases | What it does |
 |---|---|---|
-| notion-workspace | "set up Notion", "connect MCP", "workspace config" | Setup and registration (this skill) |
-| notion-research | "add entry", "query milestones", "log experiment", "mark complete" | NL research operations |
-| notion-bulletin | "notion infra", "skill maintenance", "open issue" | Infrastructure maintenance gate |
+| notion-ao-workspace | "set up Notion", "connect MCP", "workspace config" | Setup and registration (this skill) |
+| notion-ao-ops | "add entry", "query milestones", "log experiment", "mark complete" | NL research operations |
+| notion-ao-bulletin | "notion infra", "skill maintenance", "open issue" | Infrastructure maintenance gate |
 | notion-page-designer | "design a page", "audit layout", "fix formatting" | Page design and layout |
 
 ## Workspace Configuration

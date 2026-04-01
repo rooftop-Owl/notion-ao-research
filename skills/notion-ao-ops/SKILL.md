@@ -1,5 +1,5 @@
 ---
-name: notion-research
+name: notion-ao-ops
 description: >-
   This skill should be used when the user wants to "add entry", "log work",
   "query schedule", "add milestone", "log experiment", "add paper", "mark complete",
@@ -10,13 +10,13 @@ description: >-
 license: CC-BY-NC-SA-4.0
 metadata:
   author: https://github.com/rooftop-Owl
-  version: "1.1.0"
+  version: "1.3.0"
   domain: productivity
   triggers: add entry, log work, query schedule, add milestone, log experiment, add paper, mark complete, what's on today, show experiments, update status, research diary, handoff, hub and spoke
   role: specialist
   scope: operations
   output-format: api-calls
-  related-skills: notion-workspace, notion-bulletin
+  related-skills: notion-ao-workspace, notion-ao-bulletin
 ---
 
 # Notion Research
@@ -31,7 +31,7 @@ Provide a natural-language interface for research-tracking databases through Not
 2. Match the user request to a database pattern by schema characteristics and intent cues.
 3. Extract runtime values from config: `data_source_id`, title property name, and allowed select/multi-select options.
 4. Build API calls using those runtime values only.
-5. If workspace configuration is missing, load the `notion-workspace` skill and establish config before executing ADD/QUERY/UPDATE operations.
+5. If workspace configuration is missing, load the `notion-ao-workspace` skill and establish config before executing ADD/QUERY/UPDATE operations.
 
 ## Database Operation Patterns
 
