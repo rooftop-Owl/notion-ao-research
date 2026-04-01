@@ -70,15 +70,17 @@ The agent will load `notion-workspace`, walk you through token creation and page
 
 ## Skills
 
-| Skill | Triggers | What it does |
-|-------|----------|-------------|
-| [notion-workspace](./skills/notion-workspace/SKILL.md) | "set up Notion", "connect MCP", "workspace config" | Gateway: MCP setup, workspace registration, skill dispatch |
-| [notion-research](./skills/notion-research/SKILL.md) | "add entry", "log experiment", "mark complete" | NL research operations — add/query/update across any database pattern |
-| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | "notion infra", "open issue", "skill maintenance" | Infrastructure maintenance gate for skill changes and issue tracking |
-| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | "write markdown", "format docs" | Markdown formatting reference (GFM, callouts, diagrams, LaTeX, code blocks) |
-| [project-context](./skills/project-context/SKILL.md) | "project context", "current priorities", "sync context" | Fetches project hub from Notion to surface current state before research tasks |
-| [research-methodology](./skills/research-methodology/SKILL.md) | "research methodology", "citation standards", "Two-Zone Model" | Foundational research principles — citation fidelity, calibrated uncertainty, evidence quality |
-| [writing-conventions](./skills/writing-conventions/SKILL.md) | "academic writing", "calibrated language", "citation quality" | Writing standards, uncertainty language, citation quality gates for research output |
+| Skill | When to load | What it does |
+|-------|-------------|-------------|
+| [notion-workspace](./skills/notion-workspace/SKILL.md) | First-time project setup, or if MCP connection needs reconfiguring | Gateway: MCP setup, workspace registration, routes to the right skill |
+| [notion-research](./skills/notion-research/SKILL.md) | Any routine database op — "add entry", "log experiment", "mark complete" | NL → database operations: add/query/update across diary, milestones, experiments, papers, notes |
+| [notion-bulletin](./skills/notion-bulletin/SKILL.md) | Modifying the Notion skill family itself (not for everyday research work) | Infrastructure gate: tracks open issues, logs enhancements, enforces session-close protocol |
+| [markdown-documentation](./skills/markdown-documentation/SKILL.md) | Writing READMEs, docs, or formatting GFM — tables, callouts, diagrams, LaTeX | Complete GFM reference: alerts, collapsibles, Mermaid diagrams, LaTeX, code blocks |
+| [project-context](./skills/project-context/SKILL.md) | Start of any research session — orients the agent to active priorities | Fetches the Project Hub page from Notion to surface current state before research tasks |
+| [research-methodology](./skills/research-methodology/SKILL.md) | Literature work, citing sources, evaluating evidence, designing Two-Zone workspaces | Citation fidelity, calibrated uncertainty language, evidence quality tiers, Two-Zone model |
+| [writing-conventions](./skills/writing-conventions/SKILL.md) | Finalizing manuscripts, polishing academic prose, enforcing consistent hedging language | Writing standards: uncertainty language, citation quality gates, document quality checklist |
+
+
 ## Quick Start
 
 1. **Install** — Clone or `npx skills add` this repo
