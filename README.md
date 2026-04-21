@@ -19,7 +19,7 @@ Works with any MCP-compatible agent platform — Claude Code, Cursor, Windsurf, 
 ### Claude Code (native plugin)
 
 ```bash
-claude plugin marketplace add rooftop-Owl/notion-ao-research
+claude plugin marketplace add rooftop-Owl https://github.com/rooftop-Owl/rooftop-owl-marketplace.git
 claude plugin install notion-ao-research
 ```
 
